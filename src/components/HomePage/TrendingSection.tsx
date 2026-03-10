@@ -1,7 +1,11 @@
 "use client";
 
 import Container from "@/src/components/Main/Container";
-import { MdOutlineArrowOutward, MdChevronLeft, MdChevronRight } from "react-icons/md";
+import {
+  MdOutlineArrowOutward,
+  MdChevronLeft,
+  MdChevronRight,
+} from "react-icons/md";
 import Link from "next/link";
 import LazyImage from "@/src/components/ui/LazyImage";
 import { formatTHB } from "@/src/lib/format";
@@ -14,12 +18,15 @@ interface Props {
 
 export default function TrendingSection({ cars }: Props) {
   // ใช้ shared hook แทน scroll logic ที่ซ้ำซ้อน (เหมือน BrandSection / CategorySection)
-  const { scrollRef, showLeftFade, showRightFade, scroll } = useHorizontalScroll(cars);
+  const { scrollRef, showLeftFade, showRightFade, scroll } =
+    useHorizontalScroll(cars);
 
   return (
-    <section className="pt-20">
+    <section className="pt-10 md:pt-20">
       <Container>
-        <h2 className="text-4xl font-semibold mb-12">Trending Models</h2>
+        <h2 className="text-2xl md:text-4xl font-semibold mb-6 md:mb-12">
+          Trending Models
+        </h2>
 
         <div className="relative">
           <div
@@ -30,7 +37,7 @@ export default function TrendingSection({ cars }: Props) {
               <Link
                 key={car.carId}
                 href={`/car/${car.carId}`}
-                className={`min-w-[280px] h-[420px] block group`}
+                className={`min-w-[240px] sm:min-w-[280px] h-[380px] sm:h-[420px] block group`}
               >
                 <div
                   className="
@@ -42,7 +49,11 @@ export default function TrendingSection({ cars }: Props) {
                     flex flex-col"
                 >
                   <div className="h-48 overflow-hidden">
-                    <LazyImage src={car.imageUrl} alt={car.carName} className="w-full h-full object-cover transition duration-500 group-hover:scale-105" />
+                    <LazyImage
+                      src={car.imageUrl}
+                      alt={car.carName}
+                      className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                    />
                   </div>
 
                   <div className="p-5 flex flex-col flex-1">

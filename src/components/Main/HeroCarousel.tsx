@@ -5,19 +5,24 @@ import Image from "next/image";
 
 const slides = [
   {
-    image: "https://pub-e9ea266beeb9463ca5d6f4f6b211dc6e.r2.dev/main/carousel1.png",
+    image:
+      "https://pub-e9ea266beeb9463ca5d6f4f6b211dc6e.r2.dev/main/carousel1.png",
   },
   {
-    image: "https://pub-e9ea266beeb9463ca5d6f4f6b211dc6e.r2.dev/main/carousel2.png",
+    image:
+      "https://pub-e9ea266beeb9463ca5d6f4f6b211dc6e.r2.dev/main/carousel2.png",
   },
   {
-    image: "https://pub-e9ea266beeb9463ca5d6f4f6b211dc6e.r2.dev/main/carousel3.png",
+    image:
+      "https://pub-e9ea266beeb9463ca5d6f4f6b211dc6e.r2.dev/main/carousel3.png",
   },
   {
-    image: "https://pub-e9ea266beeb9463ca5d6f4f6b211dc6e.r2.dev/main/carousel4.png",
+    image:
+      "https://pub-e9ea266beeb9463ca5d6f4f6b211dc6e.r2.dev/main/carousel4.png",
   },
   {
-    image: "https://pub-e9ea266beeb9463ca5d6f4f6b211dc6e.r2.dev/main/carousel5.png",
+    image:
+      "https://pub-e9ea266beeb9463ca5d6f4f6b211dc6e.r2.dev/main/carousel5.png",
   },
 ];
 
@@ -76,19 +81,19 @@ export default function HeroCarousel() {
           alt="LoveCodeLoveCar"
           width={300}
           height={300}
-          className="object-contain drop-shadow-2xl"
+          className="object-contain drop-shadow-2xl w-[150px] sm:w-[200px] md:w-[250px] lg:w-[300px] h-auto"
           priority
         />
       </div>
 
       {/* Bottom content */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 pb-10 px-12 flex items-end justify-between">
+      <div className="absolute bottom-0 left-0 right-0 z-20 pb-6 sm:pb-8 md:pb-10 px-4 sm:px-8 md:px-12 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
         {/* Title */}
         <div key={current} className="animate-fade-in-up">
           <p className="text-white/60 text-sm font-medium tracking-widest uppercase mb-2">
             3D Car Showcase
           </p>
-          <h1 className="text-white text-4xl md:text-5xl font-bold tracking-tight">
+          <h1 className="text-white text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight">
             Discover the Power <span className="text-white/90">of Design</span>
           </h1>
         </div>

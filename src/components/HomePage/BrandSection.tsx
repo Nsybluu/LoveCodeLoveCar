@@ -35,10 +35,12 @@ export default function BrandSection({
 
   return (
     <section
-      className={`py-24 relative ${background || ""} ${className || ""}`}
+      className={`py-12 md:py-24 relative ${background || ""} ${className || ""}`}
     >
       <Container>
-        <h2 className="text-4xl font-semibold tracking-tight mb-14">{title}</h2>
+        <h2 className="text-2xl md:text-4xl font-semibold tracking-tight mb-6 md:mb-14">
+          {title}
+        </h2>
 
         <div className="relative">
           <div

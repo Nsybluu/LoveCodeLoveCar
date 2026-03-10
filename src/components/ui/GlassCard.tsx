@@ -11,7 +11,7 @@ export default function GlassCard({ children, dark = false }: GlassCardProps) {
   return (
     <div
       className={`
-        relative rounded-3xl p-8
+        relative rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8
         bg-white/10 backdrop-blur-xs
         border border-white/10
         shadow-[0_10px_40px_rgba(0,0,0,0.25)]

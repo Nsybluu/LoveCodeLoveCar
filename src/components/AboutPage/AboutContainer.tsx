@@ -31,7 +31,6 @@ function TechIcon({ children }: { children: React.ReactNode }) {
   );
 }
 
-
 export default function AboutContainer() {
   const [loaded, setLoaded] = useState(false);
 
@@ -61,7 +60,7 @@ export default function AboutContainer() {
         <div className="absolute inset-0 bg-black/30" />
 
         {/* Content Wrapper */}
-        <div className="relative z-10 px-8 py-15 space-y-24">
+        <div className="relative z-10 px-4 sm:px-6 md:px-8 py-10 md:py-15 space-y-12 md:space-y-24">
           {/* Card 1 - Top Left */}
           <div className="max-w-2xl">
             <GlassCard>

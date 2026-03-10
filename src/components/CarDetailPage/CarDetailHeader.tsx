@@ -11,8 +11,8 @@ export default function CarDetailHeader({ carName }: Props) {
   const router = useRouter();
 
   return (
-    <div className="w-full border-b border-gray-200 pt-30 pb-6">
-      <div className="max-w-7xl mx-auto px-6 flex items-center gap-20">
+    <div className="w-full border-b border-gray-200 pt-20 md:pt-30 pb-6">
+      <div className="max-w-7xl mx-auto px-6 flex items-center gap-4 md:gap-20">
         {/* Back */}
         <button
           onClick={() => router.back()}

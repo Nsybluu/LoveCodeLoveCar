@@ -14,7 +14,7 @@ export default function CarSpecSection({ specs }: Props) {
   // ถ้าไม่มีข้อมูล
   if (!specs || specs.length === 0) {
     return (
-      <div className="mt-20 bg-white rounded-2xl p-12 shadow-md border border-gray-200 text-center">
+      <div className="mt-10 md:mt-20 bg-white rounded-2xl p-6 md:p-12 shadow-md border border-gray-200 text-center">
         <h2 className="text-2xl font-bold mb-6">Specifications</h2>
 
         <div className="py-16 text-gray-400 flex flex-col items-center gap-4">
@@ -28,10 +28,10 @@ export default function CarSpecSection({ specs }: Props) {
   }
 
   return (
-    <div className="mt-20 bg-white rounded-2xl p-12 shadow-md border border-gray-200">
+    <div className="mt-10 md:mt-20 bg-white rounded-2xl p-6 md:p-12 shadow-md border border-gray-200">
       <h2 className="text-2xl font-bold mb-10">Specifications</h2>
 
-      <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-16 gap-y-10">
+      <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-8 md:gap-x-16 gap-y-10">
         {specs.map((section) => (
           <div key={section.sectionId}>
             <h3 className="text-lg font-semibold mb-4">{section.title}</h3>

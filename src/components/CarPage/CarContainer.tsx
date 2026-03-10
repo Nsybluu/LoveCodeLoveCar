@@ -21,7 +21,10 @@ function CarCard({ car }: { car: Car }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25 }}
     >
-      <Link href={`/car/${car.carId}`} className="h-[420px] block group">
+      <Link
+        href={`/car/${car.carId}`}
+        className="h-[380px] sm:h-[420px] block group"
+      >
         <div className="bg-gray-100 rounded-2xl border border-gray-200 hover:shadow-[0_10px_30px_rgba(0,0,0,0.10)] transition-all duration-300 overflow-hidden h-full flex flex-col">
           <div className="h-48 overflow-hidden relative">
             <LazyImage

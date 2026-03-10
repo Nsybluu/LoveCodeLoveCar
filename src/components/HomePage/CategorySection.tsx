@@ -32,9 +32,13 @@ export default function CategorySection({
   };
 
   return (
-    <section className={`bg-gray-100 py-24 relative ${className || ""}`}>
+    <section
+      className={`bg-gray-100 py-12 md:py-24 relative ${className || ""}`}
+    >
       <Container>
-        <h2 className="text-4xl font-semibold tracking-tight mb-14">{title}</h2>
+        <h2 className="text-2xl md:text-4xl font-semibold tracking-tight mb-6 md:mb-14">
+          {title}
+        </h2>
 
         <div className="relative">
           <div

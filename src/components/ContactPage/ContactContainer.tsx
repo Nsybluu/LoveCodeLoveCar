@@ -5,7 +5,6 @@ import { useState } from "react";
 import { FaGithub, FaGoogle, FaFacebookF, FaInstagram } from "react-icons/fa";
 import GlassCard from "@/src/components/ui/GlassCard";
 
-
 function SocialIcon({
   children,
   href,
@@ -34,11 +33,10 @@ function SocialIcon({
 }
 
 export default function ContactContainer() {
-
   const [loaded, setLoaded] = useState(false);
-  
+
   return (
-    <section className="relative w-full h-[1400px] max-w-[843px] overflow-hidden rounded-3xl mx-auto flex flex-col">
+    <section className="relative w-full min-h-screen max-w-[843px] overflow-hidden rounded-3xl mx-auto flex flex-col">
       {/* Background Image */}
       <div className="absolute inset-0">
         {!loaded && <div className="absolute inset-0 skeleton" />}
@@ -61,7 +59,7 @@ export default function ContactContainer() {
       <div className="absolute inset-0 bg-black/30" />
 
       {/* Content */}
-      <div className="relative z-10 p-10 flex flex-col h-full">
+      <div className="relative z-10 p-5 sm:p-8 md:p-10 flex flex-col h-full">
         {/* 🔹 ส่วนบน (2 ก้อนแรก) */}
         <div className="space-y-10">
           <GlassCard>
@@ -87,7 +85,7 @@ export default function ContactContainer() {
           <GlassCard>
             <h3 className="text-xl font-semibold mb-6">Contact Method</h3>
 
-            <div className="flex justify-center gap-10 text-4xl pt-5">
+            <div className="flex justify-center gap-5 sm:gap-8 md:gap-10 text-4xl pt-5">
               <SocialIcon href="https://github.com/Nsybluu">
                 <FaGithub />
               </SocialIcon>

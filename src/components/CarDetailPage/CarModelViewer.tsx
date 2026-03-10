@@ -1,7 +1,12 @@
 "use client";
 
 import { Canvas, useThree } from "@react-three/fiber";
-import { ContactShadows, Environment, OrbitControls, useGLTF } from "@react-three/drei";
+import {
+  ContactShadows,
+  Environment,
+  OrbitControls,
+  useGLTF,
+} from "@react-three/drei";
 import { Suspense, useEffect, useState, useCallback } from "react";
 import { IoMdClose } from "react-icons/io";
 import * as THREE from "three";
@@ -14,32 +19,33 @@ import { motion, AnimatePresence } from "framer-motion";
 // ===============================
 const MODEL_BODY_MATERIALS: Record<string, string[]> = {
   "720spider": ["car_paint"],
-  "aston_martin_db11": ["amdb11"],
-  "carrera4s": ["paint"],
-  "cls53": ["body"],
-  "default": ["wire_006134113"],
-  "g63": ["bodypaint"],
-  "fordeverest": ["carpaint"],
-  "lpi800": ["material.008", "material.004", "material.009", "material.012", "material.042"],
-  "m3touring81": [
-    "m3g81law_coloured_gloss",
-    "m3g81law",
+  aston_martin_db11: ["amdb11"],
+  carrera4s: ["paint"],
+  cls53: ["body"],
+  default: ["wire_006134113"],
+  g63: ["bodypaint"],
+  fordeverest: ["carpaint"],
+  lpi800: [
+    "material.008",
+    "material.004",
+    "material.009",
+    "material.012",
+    "material.042",
   ],
-  "m4": ["m4car_body1", "m4car_hood1", "m4car_bodykit1"],
-  "maybach": ["car_paint", "car_paint.001", "car_paint_with_flakes"],
-  "nissancab2021": ["carpaint"],
-  "r34": ["material.001"],
-  "r35": ["r35_paint"],
-  "supra": ["body.012"],
-  "toyotafortuner": ["carpaint"],
-  "typer": [
-    "honda_civictyperewardrecycled_2023paint_material",
-  ],
+  m3touring81: ["m3g81law_coloured_gloss", "m3g81law"],
+  m4: ["m4car_body1", "m4car_hood1", "m4car_bodykit1"],
+  maybach: ["car_paint", "car_paint.001", "car_paint_with_flakes"],
+  nissancab2021: ["carpaint"],
+  r34: ["material.001"],
+  r35: ["r35_paint"],
+  supra: ["body.012"],
+  toyotafortuner: ["carpaint"],
+  typer: ["honda_civictyperewardrecycled_2023paint_material"],
 };
 
 // Mesh node names to EXCLUDE from color change (lowercase substrings)
 const MODEL_MESH_EXCLUDES: Record<string, string[]> = {
-  "m3touring81": ["grille", "intercooler", "exh_tip", "diffuser", "headlight"],
+  m3touring81: ["grille", "intercooler", "exh_tip", "diffuser", "headlight"],
 };
 
 function getModelKey(path: string): string | null {
@@ -62,12 +68,15 @@ function isBodyMaterialHeuristic(matName: string): boolean {
       !name.includes("plastic") &&
       !name.includes("urus") &&
       !name.includes("generic")) ||
-    (name.includes("coloured") &&
-      !name.includes("interior"))
+    (name.includes("coloured") && !name.includes("interior"))
   );
 }
 
-function isBodyMaterial(matName: string, path: string, forceHeuristic = false): boolean {
+function isBodyMaterial(
+  matName: string,
+  path: string,
+  forceHeuristic = false,
+): boolean {
   const name = matName.toLowerCase();
 
   if (!forceHeuristic) {
@@ -102,6 +111,7 @@ function getMeshBounds(object: THREE.Object3D): THREE.Box3 {
 
 function Model({ path, color }: { path: string; color: string }) {
   const { scene } = useGLTF(path);
+  const { invalidate } = useThree();
 
   const model = React.useMemo(() => {
     if (!scene) return null;
@@ -161,8 +171,8 @@ function Model({ path, color }: { path: string; color: string }) {
     return clone;
   }, [scene, path]);
 
-  // 🎨 เปลี่ยนสี
-  React.useEffect(() => {
+  // 🎨 เปลี่ยนสี — ใช้ useLayoutEffect เพื่อให้ material อัปเดตก่อน canvas render
+  React.useLayoutEffect(() => {
     if (!model) return;
 
     const applyColor = (mesh: THREE.Mesh) => {
@@ -173,10 +183,12 @@ function Model({ path, color }: { path: string; color: string }) {
       newMat.map = null;
       newMat.emissiveMap = null;
       newMat.aoMap = null;
-      if ('metalness' in newMat) newMat.metalness = 0.4;
-      if ('roughness' in newMat) newMat.roughness = 0.25;
-      if ('clearcoat' in newMat) (newMat as THREE.MeshPhysicalMaterial).clearcoat = 0.8;
-      if ('clearcoatRoughness' in newMat) (newMat as THREE.MeshPhysicalMaterial).clearcoatRoughness = 0.1;
+      if ("metalness" in newMat) newMat.metalness = 0.4;
+      if ("roughness" in newMat) newMat.roughness = 0.25;
+      if ("clearcoat" in newMat)
+        (newMat as THREE.MeshPhysicalMaterial).clearcoat = 0.8;
+      if ("clearcoatRoughness" in newMat)
+        (newMat as THREE.MeshPhysicalMaterial).clearcoatRoughness = 0.1;
       newMat.needsUpdate = true;
     };
 
@@ -190,7 +202,7 @@ function Model({ path, color }: { path: string; color: string }) {
         const meshKey = getModelKey(path);
         const excludes = meshKey ? MODEL_MESH_EXCLUDES[meshKey] : null;
         if (excludes) {
-          const nodeName = (mesh.name || '').toLowerCase();
+          const nodeName = (mesh.name || "").toLowerCase();
           if (excludes.some((ex) => nodeName.includes(ex))) return;
         }
         applyColor(mesh);
@@ -210,7 +222,10 @@ function Model({ path, color }: { path: string; color: string }) {
         }
       });
     }
-  }, [model, color, path]);
+
+    // บังคับให้ Canvas วาดเฟรมใหม่ทันที (frameloop="demand")
+    invalidate();
+  }, [model, color, path, invalidate]);
 
   if (!model) return null;
 
@@ -298,7 +313,9 @@ export default function CarModelViewer({
   fullScreen = false,
   onClose,
 }: Props) {
-  const finalPath = modelPath || "https://pub-6c082fd2916247f384ce18d4075bfb85.r2.dev/defaultCar.glb";
+  const finalPath =
+    modelPath ||
+    "https://pub-6c082fd2916247f384ce18d4075bfb85.r2.dev/defaultCar.glb";
 
   useEffect(() => {
     if (!fullScreen) return;
@@ -313,12 +330,15 @@ export default function CarModelViewer({
   // increment key to force fresh Canvas. Does NOT fire during
   // fullscreen toggle because the Canvas stays mounted.
   const [canvasKey, setCanvasKey] = useState(0);
-  const handleCanvasCreated = useCallback((state: { gl: THREE.WebGLRenderer }) => {
-    const canvas = state.gl.domElement;
-    canvas.addEventListener('webglcontextlost', () => {
-      setCanvasKey(prev => prev + 1);
-    });
-  }, []);
+  const handleCanvasCreated = useCallback(
+    (state: { gl: THREE.WebGLRenderer }) => {
+      const canvas = state.gl.domElement;
+      canvas.addEventListener("webglcontextlost", () => {
+        setCanvasKey((prev) => prev + 1);
+      });
+    },
+    [],
+  );
 
   return (
     <>
@@ -367,7 +387,8 @@ export default function CarModelViewer({
             frameloop="demand"
             dpr={[1, 1.5]}
             camera={{ position: [4.5, 1.8, 5], fov: 32 }}
-            resize={{ debounce: 0 }}>
+            resize={{ debounce: 0 }}
+          >
             <color attach="background" args={["#111115"]} />
 
             <Suspense fallback={null}>
@@ -377,12 +398,29 @@ export default function CarModelViewer({
 
             <Environment preset="warehouse" />
             <ambientLight intensity={0.15} />
-            <spotLight position={[5, 8, 5]} intensity={80} angle={0.5} penumbra={0.8} castShadow />
+            <spotLight
+              position={[5, 8, 5]}
+              intensity={80}
+              angle={0.5}
+              penumbra={0.8}
+              castShadow
+            />
             <directionalLight position={[-5, 4, 2]} intensity={0.8} />
-            <spotLight position={[0, 5, -8]} intensity={40} angle={0.6} penumbra={1} />
+            <spotLight
+              position={[0, 5, -8]}
+              intensity={40}
+              angle={0.6}
+              penumbra={1}
+            />
             <directionalLight position={[0, 10, 0]} intensity={0.5} />
 
-            <ContactShadows position={[0, 0.01, 0]} opacity={0.6} scale={20} blur={1} far={20} />
+            <ContactShadows
+              position={[0, 0.01, 0]}
+              opacity={0.6}
+              scale={20}
+              blur={1}
+              far={20}
+            />
 
             <OrbitControls
               enablePan={false}
