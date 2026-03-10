@@ -1,7 +1,6 @@
 import { db } from "@/src/lib/db";
-import { Car } from "../models/Car";
 import { cacheLife } from "next/cache";
-import type { CarSpecSection } from "@/src/types";
+import type { Car, CarSpecSection } from "@/src/types";
 
 export async function getTrending() {
   "use cache";
