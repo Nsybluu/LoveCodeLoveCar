@@ -61,7 +61,7 @@ export default function ContactContainer() {
       {/* Content */}
       <div className="relative z-10 p-5 sm:p-8 md:p-10 flex flex-col h-full">
         {/* 🔹 ส่วนบน (2 ก้อนแรก) */}
-        <div className="space-y-10">
+        <div className="space-y-10 mb-8">
           <GlassCard>
             <h2 className="text-2xl font-semibold">
               Get in touch with LoveCodeLoveCar
