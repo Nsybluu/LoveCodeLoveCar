@@ -4,6 +4,10 @@ import { getAllCategories } from "@/src/lib/services/CategoryService";
 import Container from "@/src/components/Main/Container";
 import CarListClient from "@/src/components/CarPage/CarListClient";
 
+export const metadata = {
+  title: "Car | LoveCodeLoveCar",
+};
+
 export default async function CarPage() {
   const brands = await getAllBrands();
   const categories = await getAllCategories();
